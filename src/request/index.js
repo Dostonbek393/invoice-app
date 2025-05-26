@@ -4,7 +4,7 @@ export async function getInvoices(query = "") {
   const req = await fetch(baseURL + (query ? `?status=${query}` : ""));
   if (req.status === 200) {
     const result = await req.json();
-    return result.data;
+    return Array.isArray(result.data) ? result.data : []; 
   } else {
     throw new Error("Something went wrong :(");
   }
@@ -40,7 +40,7 @@ export async function updateById(id, newDate) {
     body: JSON.stringify(newDate),
   });
   if (req.status === 200) {
-    const result = req.json();
+    const result = await req.json();
     return result;
   } else {
     throw new Error("Something went wrong :(");
@@ -48,6 +48,7 @@ export async function updateById(id, newDate) {
 }
 
 export async function addInvoice(data) {
+  console.log(data);
   const req = await fetch(baseURL, {
     method: "POST",
     headers: {
@@ -55,10 +56,10 @@ export async function addInvoice(data) {
     },
     body: JSON.stringify(data),
   });
-  const text = await req.text();
   if (req.status === 200) {
-    return JSON.parse(text);
+    const result = await req.json();
+    return result;
   } else {
-    throw new Error("Server error: " + text);
+    throw new Error("Server error: :(");
   }
 }

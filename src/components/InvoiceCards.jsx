@@ -12,6 +12,7 @@ export default function InvoiceCards() {
 
   useEffect(() => {
     setLoading(true);
+    console.log(filter);
     getInvoices(filter)
       .then((res) => {
         setInvoices(res);
@@ -38,7 +39,8 @@ export default function InvoiceCards() {
 
   return (
     <div className="base-container flex flex-col gap-4">
-      {invoices.map((el, index) => {
+      {invoices.map((el) => {
+        console.log(el);
         const { createdAt, total, status, clientName, id } = el;
 
         return (

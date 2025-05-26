@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowBigDown, PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 import { useAppStore } from "../lib/zustand";
 import { queryGenerator } from "../lib/utils";
+import path2 from "../assets/Path2.svg";
 
 import {
   DropdownMenu,
@@ -14,8 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Header() {
-  const { setSheetOpen } = useAppStore();
-  const { setFilter } = useAppStore();
+  const { setSheetOpen, setFilter } = useAppStore();
   const [items, setItems] = useState({
     draft: false,
     paid: false,
@@ -37,15 +37,28 @@ export default function Header() {
     <header>
       <div className="base-container flex items-center justify-between py-10">
         <div>
-          <h1>Invoices</h1>
-          <p>Theare are 7 total invoices</p>
+          <h1
+            className="text-[#0C0E16] font-bold text-[32px]"
+            style={{ color: "var(--home-text)" }}
+          >
+            Invoices
+          </h1>
+          <p
+            className="mt-2 text-[#888EB0]"
+            style={{ color: "var(--home-text)" }}
+          >
+            Theare are 7 total invoices
+          </p>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className={"ml-auto mr-10"} variant="ghost">
+            <Button
+              className={"ml-auto mr-10 items-center gap-4"}
+              variant="ghost"
+            >
               Filter by status
-              <ArrowBigDown />
+              <img src={path2} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
@@ -75,7 +88,7 @@ export default function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button onClick={setSheetOpen}>
+        <Button onClick={setSheetOpen} className="rounded-2xl w-[150px] h-12">
           <PlusCircleIcon />
           New Invoice
         </Button>

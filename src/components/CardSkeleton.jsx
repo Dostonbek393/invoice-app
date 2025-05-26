@@ -1,5 +1,5 @@
-import { ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import pathcopy from "../assets/Path-Copy.svg";
 
 import {
   Card,
@@ -31,7 +31,7 @@ export default function CardSkeleton({ length = 7 }) {
                     <Skeleton className="w-[63px] h-6 rounded-md bg-slate-300" />
                   </span>
                   <Skeleton className="w-[104px] h-9 rounded-md bg-slate-300" />
-                  <ArrowRight className="text-[#7C5DFA]" />
+                  <img src={pathcopy} />
                 </div>
               </CardHeader>
             </Card>

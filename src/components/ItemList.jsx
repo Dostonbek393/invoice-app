@@ -44,35 +44,27 @@ export default function ItemList({ info }) {
     });
   }
 
-  function handleClick(type, id) {
+  const handleClick = (type) => {
     if (type === "add") {
-      if (localItems.at(-1).name.trim() !== "") {
-        setLocalItems((prev) => {
-          return [
-            ...prev,
-            {
-              id,
-              name: "",
-              quantity: 1,
-              price: 0,
-              get total() {
-                return this.price * this.quantity;
-              },
-            },
-          ];
-        });
-      } else {
-        toast.info("Oxirgi nameni kiriting");
+      const lastItem = localItems.at(-1);
+      if (!lastItem.name.trim()) {
+        toast.info("Oxirgi item nomini kiriting!");
+        return;
       }
-    } else if (type === "delete") {
-      if (localItems.length === 1) {
-        toast.info("Eng kamida bitta element bo'lishi kerak");
-      } else {
-        const filtered = items.filter((el) => el.id !== id);
-        setLocalItems(filtered);
-      }
+      const newItem = {
+        id: crypto.randomUUID(),
+        name: "",
+        quantity: 1,
+        price: 0,
+        total: 0,
+      };
+      setLocalItems((prev) => [...prev, newItem]);
     }
-  }
+  };
+
+  useEffect(() => {
+    setItems(localItems);
+  }, [localItems]);
 
   return (
     <div>

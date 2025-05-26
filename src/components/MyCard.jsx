@@ -1,6 +1,6 @@
-import { ArrowRight } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import { useNavigate } from "react-router-dom";
+import pathcopy from "../assets/Path-Copy.svg";
 
 import {
   Card,
@@ -9,13 +9,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function MyCard({
-  createdAt = "Due 19 Aug 2021",
-  clientName = "Jensen Huang",
-  total = "£ 1,800.90",
-  status = "draft",
-  id = "1",
-}) {
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+export default function MyCard({ createdAt, clientName, total, status, id }) {
   const navigate = useNavigate();
   return (
     <Card
@@ -26,12 +29,32 @@ export default function MyCard({
     >
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>#{id}</CardTitle>
-          <CardDescription>{createdAt}</CardDescription>
-          <span>{clientName}</span>
-          <span>£{total}</span>
+          <CardTitle className="text-[#7E88C3]">
+            #
+            <span className="text-black" style={{ color: "var(--home-text)" }}>
+              {id}
+            </span>
+          </CardTitle>
+          <CardDescription
+            className="text-[#888EB0]"
+            style={{ color: "var(--home-text)" }}
+          >
+            Due {formatDate(createdAt)}
+          </CardDescription>
+          <span
+            className="text-[#858BB2]"
+            style={{ color: "var(--home-text)" }}
+          >
+            {clientName}
+          </span>
+          <span
+            className="text-[#0C0E16] font-bold text-[16px]"
+            style={{ color: "var(--home-text)" }}
+          >
+            £{total.toFixed(2)}
+          </span>
           <StatusBadge status={status} />
-          <ArrowRight className="text-[#7C5DFA]" />
+          <img src={pathcopy} />
         </div>
       </CardHeader>
     </Card>

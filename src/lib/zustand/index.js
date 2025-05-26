@@ -21,9 +21,9 @@ export const useAppStore = create((set) => {
     },
 
     setInvoices(invoices) {
-      return set(() => {
-        return { invoices };
-      });
+      return set(() => ({
+        invoices: Array.isArray(invoices) ? invoices : [], // yangilashda ham tekshiruv
+      }));
     },
 
     updateInvoices(newData) {

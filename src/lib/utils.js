@@ -36,14 +36,18 @@ export function prepareData(obj) {
   }
 
   for (const key in obj) {
-    if (!key.startsWith(senderAddressKey) || key.startsWith(clientAddressKey)) {
+    if (
+      !(key.startsWith(senderAddressKey) || key.startsWith(clientAddressKey))
+    ) {
       result[key] = obj[key];
     }
   }
 
-  result.total = Array.isArray(obj.items)
-    ? obj.items.reduce((sum, item) => sum + item.quantity * item.price, 0)
-    : 0;
+  const total = obj.items.reduce((value, currentValue) => {
+    return value + currentValue.total;
+  }, 0);
+
+  result.total = total;
 
   return result;
 }

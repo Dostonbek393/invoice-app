@@ -1,4 +1,4 @@
-import { ArrowBigDown, Moon, Sun } from "lucide-react";
+import { ArrowBigDown, Moon, Sun, Check } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -18,29 +18,17 @@ export default function ThemesToggle() {
 
   function handleTheme(type, mode) {
     const html = document.documentElement;
-    let isDark;
-    if (html.dataset.theme.startsWith("dark-")) {
-      isDark = true;
-    } else {
-      isDark = false;
-    }
+    let isDark = html.dataset.theme.startsWith("dark-");
 
     if (mode === "theme") {
-      if (isDark) {
-        html.dataset.theme = `dark-${type}`;
-        setTheme(`dark-${type}`);
-      } else {
-        html.dataset.theme = type;
-        setTheme(type);
-      }
+      html.dataset.theme = isDark ? `dark-${type}` : type;
+      setTheme(isDark ? `dark-${type}` : type);
     } else if (mode === "dark") {
-      if (type.startsWith("dark-")) {
-        html.dataset.theme = type.replace("dark-", "");
-        setTheme(type.replace("dark-", ""));
-      } else {
-        html.dataset.theme = `dark-${type}`;
-        setTheme(`dark-${type}`);
-      }
+      const newTheme = type.startsWith("dark-")
+        ? type.replace("dark-", "")
+        : `dark-${type}`;
+      html.dataset.theme = newTheme;
+      setTheme(newTheme);
     }
   }
 
@@ -53,30 +41,45 @@ export default function ThemesToggle() {
   }, []);
 
   return (
-    <div className="flex gap-5 md:flex-col md:items-start">
+    <div className="flex gap-4 md:flex-col md:items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary">
-            <span className="md:hidden">Change theme</span>
-            <ArrowBigDown />
+          <Button
+            className="w-10 h-10 p-0 hover:bg-muted transition"
+            variant="outline"
+            size="icon"
+          >
+            <ArrowBigDown className="w-5 h-5" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>Themes</DropdownMenuLabel>
+
+        <DropdownMenuContent
+          className="w-44 rounded-xl shadow-xl bg-background border p-2 space-y-1"
+          sideOffset={8}
+        >
+          <DropdownMenuLabel className="text-xs text-muted-foreground px-2">
+            Select Theme
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <div className="flex flex-col">
+
+          <div className="flex flex-col space-y-1">
             {themes.map((el, index) => {
+              const isActive =
+                theme === el ||
+                theme === `dark-${el}` ||
+                theme === el.replace("dark-", "");
+
               return (
-                <Button
+                <button
                   key={index}
-                  onClick={() => {
-                    handleTheme(el, "theme");
-                  }}
-                  className={"justify-start"}
-                  variant="ghost"
+                  onClick={() => handleTheme(el, "theme")}
+                  className={`flex items-center justify-between px-3 py-2 rounded-md text-sm hover:bg-muted transition ${
+                    isActive ? "bg-muted font-semibold" : ""
+                  }`}
                 >
                   {el}
-                </Button>
+                  {isActive && <Check className="w-4 h-4 opacity-70" />}
+                </button>
               );
             })}
           </div>
@@ -84,12 +87,16 @@ export default function ThemesToggle() {
       </DropdownMenu>
 
       <Button
-        size={"icon"}
-        onClick={() => {
-          handleTheme(theme, "dark");
-        }}
+        className="w-10 h-10 p-0 hover:bg-muted transition"
+        size="icon"
+        variant="outline"
+        onClick={() => handleTheme(theme, "dark")}
       >
-        {theme.startsWith("dark-") ? <Sun /> : <Moon />}
+        {theme.startsWith("dark-") ? (
+          <Sun className="w-5 h-5" />
+        ) : (
+          <Moon className="w-5 h-5" />
+        )}
       </Button>
     </div>
   );

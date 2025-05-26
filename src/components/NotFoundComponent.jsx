@@ -2,7 +2,7 @@ import NotFoundImage from "../assets/not-found.svg";
 
 export default function NotFoundComponent() {
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center text-center mt-[140px]">
       <img src={NotFoundImage} alt="Not found image" width={241} height={200} />
       <h1 className="mb-10 text-5xl font-medium">There is nothing here</h1>
       <p>

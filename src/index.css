@@ -54,3 +54,22 @@
     @apply w-full max-w-[730px] mx-auto pr-5 pl-5 md:pl-30;
   }
 }
+
+@font-face {
+  font-display: swap;
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/league-spartan-v11-latin-regular.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/league-spartan-v11-latin-700.woff2") format("woff2");
+}
+
+body {
+  font-family: "League Spartan", sans-serif;
+}
