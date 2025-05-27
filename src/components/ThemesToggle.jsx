@@ -45,7 +45,7 @@ export default function ThemesToggle() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            className="w-10 h-10 p-0 hover:bg-muted transition"
+            className="w-10 h-10 p-0 hover:bg-muted transition cursor-pointer"
             variant="outline"
             size="icon"
           >
@@ -54,7 +54,7 @@ export default function ThemesToggle() {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="w-44 rounded-xl shadow-xl bg-background border p-2 space-y-1"
+          className="w-44 rounded-xl shadow-xl bg-background border p-2 space-y-1 cursor-pointer"
           sideOffset={8}
         >
           <DropdownMenuLabel className="text-xs text-muted-foreground px-2">
@@ -87,7 +87,7 @@ export default function ThemesToggle() {
       </DropdownMenu>
 
       <Button
-        className="w-10 h-10 p-0 hover:bg-muted transition"
+        className="w-10 h-10 p-0 hover:bg-muted transition cursor-pointer"
         size="icon"
         variant="outline"
         onClick={() => handleTheme(theme, "dark")}

@@ -54,14 +54,15 @@ export default function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              className={"ml-auto mr-10 items-center gap-4"}
+              className="ml-auto mr-4 md:mr-10 items-center gap-2 md:gap-4 cursor-pointer"
               variant="ghost"
             >
-              Filter by status
+              <span className="hidden md:inline">Filter by status</span>
+              <span className="inline md:hidden">Filter</span>
               <img src={path2} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="w-56 cursor-pointer">
             <DropdownMenuLabel>Statuses</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <div className="flex flex-col">
@@ -71,10 +72,11 @@ export default function Header() {
                     key={key}
                     className={`${buttonVariants({
                       variant: "ghost",
-                    })} justify-start capitalize`}
+                    })} justify-start capitalize cursor-pointer`}
                     htmlFor={key}
                   >
                     <Checkbox
+                      className="cursor-pointer"
                       value={key}
                       checked={value}
                       onCheckedChange={() => handleChange(key)}
@@ -88,9 +90,13 @@ export default function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button onClick={setSheetOpen} className="rounded-2xl w-[150px] h-12">
+        <Button
+          onClick={setSheetOpen}
+          className="rounded-2xl w-[90px] md:w-[150px] h-12 cursor-pointer flex items-center gap-2 justify-center"
+        >
           <PlusCircleIcon />
-          New Invoice
+          <span className="hidden md:inline">New Invoice</span>
+          <span className="inline md:hidden">New</span>
         </Button>
       </div>
     </header>

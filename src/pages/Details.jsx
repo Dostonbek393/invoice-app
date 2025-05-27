@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button, buttonVariants } from "../components/ui/button";
 import StatusBadge from "../components/StatusBadge";
+import path1 from "../assets/Path1.svg";
 
 import {
   Dialog,
@@ -107,42 +108,54 @@ export default function Details() {
   return (
     <div className="py-5">
       <div className="base-container">
-        <Card className="mb-6">
-          <CardContent className="flex justify-between items-center">
+        <div className="flex items-center gap-7">
+          <img src={path1} />
+          <p
+            onClick={() => navigate("/")}
+            className="text-[#0C0E16] font-bold text-[12px] cursor-pointer"
+          >
+            Go back
+          </p>
+        </div>
+        <Card className="mb-6 mt-8">
+          <CardContent className="flex justify-between items-center flex-col sm:flex-row gap-4">
             <div className="flex items-center gap-2">
               <span>Status: </span>
               <StatusBadge status={invoice.status} />
             </div>
-            <div className="flex gap-3">
+
+            <div className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end fixed bottom-0 left-0 right-0 bg-white border-t p-4 sm:static sm:border-none z-50">
               <Button
-                onClick={() => {
-                  handleEdit(invoice);
-                }}
+                className="cursor-pointer hover:!bg-[#DFE3FA] h-12 rounded-2xl"
+                onClick={() => handleEdit(invoice)}
                 variant="ghost"
               >
                 Edit
               </Button>
               <Dialog>
-                <DialogTrigger
-                  className={buttonVariants({ variant: "destructive" })}
-                >
-                  Delete
+                <DialogTrigger asChild>
+                  <div className="bg-red-500 text-white text-sm px-4 py-2 rounded-2xl cursor-pointer hover:!bg-[#FF9797] h-12 flex items-center justify-center">
+                    Delete
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Confirm Deletion</DialogTitle>
                     <DialogDescription>
                       Are you sure you want to delete invoice #{invoice.id}?
-                      This action cannot be undone
+                      This action cannot be undone.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="flex justify-end gap-3">
                     <DialogClose
-                      className={buttonVariants({ variant: "ghost" })}
+                      className={`${buttonVariants({
+                        variant: "ghost",
+                      })} cursor-pointer rounded-2xl`}
                     >
                       Cancel
                     </DialogClose>
                     <Button
+                      className="cursor-pointer rounded-2xl"
                       onClick={() => handleDelete(invoice.id)}
                       variant="destructive"
                       disabled={deleteLoading}
@@ -154,13 +167,13 @@ export default function Details() {
               </Dialog>
 
               {invoice.status === "pending" && (
-                <>
-                  <Button
-                    onClick={() => handleUpdate(invoice.id, { status: "paid" })}
-                  >
-                    {updateLoading ? "Loading..." : "Mark as Paid"}
-                  </Button>
-                </>
+                <Button
+                  className="cursor-pointer hover:!bg-[#9277FF] h-12 rounded-2xl"
+                  onClick={() => handleUpdate(invoice.id, { status: "paid" })}
+                  disabled={updateLoading}
+                >
+                  {updateLoading ? "Loading..." : "Mark as Paid"}
+                </Button>
               )}
             </div>
           </CardContent>

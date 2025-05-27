@@ -14,7 +14,7 @@ export default function Sidebar() {
   const { sheetOpen, setSheetOpen, editedData } = useAppStore();
   return (
     <>
-      <div className="bg-[#373B53] flex items-center justify-between md:fixed md:flex-col md:h-full md:left-0 md:bottom-0 md:top-0 md:z-[999] rounded-r-[20px]">
+      <div className="bg-[#373B53] flex items-center justify-between md:fixed md:flex-col md:h-full md:left-0 md:bottom-0 md:top-0 md:z-[999] rounded-none md:rounded-r-[20px] md:rounded-b-none rounded-b-[20px]">
         <img src={LogoImage} />
         <div className="flex items-center gap-6 md:flex-col md:gap-0 md:mb-5">
           <ThemesToggle />
@@ -30,12 +30,12 @@ export default function Sidebar() {
       </div>
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent
-          className="ml-[100px] min-w-[calc(80%-72px)] min-h-[calc(100%-56px)] overflow-y-auto"
+          className="w-full h-full md:ml-[100px] md:min-w-[calc(80%-72px)] sm:min-w-[calc(80%-72px)] sm:min-h-[calc(100%-56px)] md:min-h-[calc(100%-56px)] overflow-y-auto"
           side="left"
         >
           <SheetHeader className="sticky top-0 w-full border-b">
             <SheetTitle className="font-bold text-[24px]">
-              New Invoice
+              {editedData?.id ? `Edit #${editedData.id}` : "New Invoice"}
             </SheetTitle>
           </SheetHeader>
           <Form setSheetOpen={setSheetOpen} info={editedData} />

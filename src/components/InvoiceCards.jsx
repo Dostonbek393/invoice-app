@@ -38,7 +38,7 @@ export default function InvoiceCards() {
   }
 
   return (
-    <div className="base-container flex flex-col gap-4">
+    <div className="base-container flex flex-col gap-4 mb-6">
       {invoices.map((el) => {
         console.log(el);
         const { createdAt, total, status, clientName, id } = el;

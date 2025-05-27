@@ -18,19 +18,26 @@ export default function StatusBadge({ status = "paid" }) {
       bg: "rgba(255,143,0, 0.05)",
     },
   };
+
+  const currentStyle = style[status] || {
+    dote: "bg-gray-400",
+    text: "text-gray-600",
+    bg: "rgba(128,128,128,0.1)",
+  };
+
   return (
     <span
       className={`${buttonVariants({
         variant: "outline",
-      })} min-w-[104px]`}
+      })} min-w-[104px] flex items-center justify-center gap-2`}
       style={{
-        backgroundColor: style[status].bg,
+        backgroundColor: currentStyle.bg,
       }}
     >
       <span
-        className={`inline-block w-2 h-2 rounded-full ${style[status].dote}`}
+        className={`inline-block w-2 h-2 rounded-full ${currentStyle.dote}`}
       ></span>
-      <span className={`capitalize ${style[status].text}`}>{status}</span>
+      <span className={`capitalize ${currentStyle.text}`}>{status}</span>
     </span>
   );
 }

@@ -25,10 +25,10 @@ export default function MyCard({ createdAt, clientName, total, status, id }) {
       onClick={() => {
         navigate(`/${id}`);
       }}
-      className="border-2 border-transparent hover:border-blue-400 transition-colors"
+      className="border-2 border-transparent hover:border-blue-400 transition-colors cursor-pointer"
     >
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-[#7E88C3]">
             #
             <span className="text-black" style={{ color: "var(--home-text)" }}>
@@ -54,7 +54,10 @@ export default function MyCard({ createdAt, clientName, total, status, id }) {
             £{total.toFixed(2)}
           </span>
           <StatusBadge status={status} />
-          <img src={pathcopy} />
+          <img
+            src={pathcopy}
+            className="hidden sm:block self-end sm:self-auto"
+          />
         </div>
       </CardHeader>
     </Card>
