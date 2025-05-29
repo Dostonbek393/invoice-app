@@ -31,6 +31,7 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --card-bg: #f9fafe;
 }
 
 [data-theme="dark-default"] {
@@ -67,6 +68,9 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
   --home-text: white;
+  --card-bg: #252945;
+  --cards-bg: #0c0e16;
+  --card-bgs: #1e2139;
 }
 
 [data-theme="blue"] {

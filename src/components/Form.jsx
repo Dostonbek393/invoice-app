@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 export default function Form({ info, setSheetOpen }) {
+  const { addInvoiceToStore, updateInvoices } = useAppStore();
   const { items: zustandItems } = useAppStore();
   const {
     senderAddress,
@@ -32,7 +33,6 @@ export default function Form({ info, setSheetOpen }) {
     items,
   } = info || {};
   const navigate = useNavigate();
-  const { updateInvoices } = useAppStore();
   const [sending, setSending] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -84,8 +84,10 @@ export default function Form({ info, setSheetOpen }) {
             `Successfully ${sending.mode === "add" ? "added" : "updated"} 👌✅`
           );
           if (sending.mode === "add") {
+            addInvoiceToStore(res);
             navigate("/");
           } else {
+            updateInvoices(res);
             navigate(-1);
           }
           setSheetOpen(false);
@@ -336,6 +338,8 @@ export default function Form({ info, setSheetOpen }) {
       {info ? (
         <div className="flex justify-end gap-5 mt-10">
           <Button
+            onClick={() => setSheetOpen(false)}
+            type="button"
             variant={"outline"}
             className="cursor-pointer rounded-2xl w-[96px] h-12"
           >

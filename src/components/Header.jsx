@@ -92,7 +92,7 @@ export default function Header() {
 
         <Button
           onClick={setSheetOpen}
-          className="rounded-2xl w-[90px] md:w-[150px] h-12 cursor-pointer flex items-center gap-2 justify-center"
+          className="rounded-2xl w-[90px] md:w-[150px] h-12 cursor-pointer flex items-center gap-2 justify-center bg-[#7C5DFA] hover:bg-[#9277FF]"
         >
           <PlusCircleIcon />
           <span className="hidden md:inline">New Invoice</span>

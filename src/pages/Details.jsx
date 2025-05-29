@@ -113,20 +113,30 @@ export default function Details() {
           <p
             onClick={() => navigate("/")}
             className="text-[#0C0E16] font-bold text-[12px] cursor-pointer"
+            style={{ color: "var(--home-text)" }}
           >
             Go back
           </p>
         </div>
-        <Card className="mb-6 mt-8">
+        <Card
+          className="mb-6 mt-8"
+          style={{
+            color: "var(--home-text)",
+            backgroundColor: "var(--card-bgs)",
+          }}
+        >
           <CardContent className="flex justify-between items-center flex-col sm:flex-row gap-4">
             <div className="flex items-center gap-2">
               <span>Status: </span>
               <StatusBadge status={invoice.status} />
             </div>
 
-            <div className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end fixed bottom-0 left-0 right-0 bg-white border-t p-4 sm:static sm:border-none z-50">
+            <div
+              className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end fixed bottom-0 left-0 right-0 bg-white border-t p-4 sm:static sm:border-none z-50"
+              style={{ backgroundColor: "var(--card-bgs)" }}
+            >
               <Button
-                className="cursor-pointer hover:!bg-[#DFE3FA] h-12 rounded-2xl"
+                className="cursor-pointer bg-[#DFE3FA] hover:!bg-[#FFFFFF] h-12 rounded-2xl"
                 onClick={() => handleEdit(invoice)}
                 variant="ghost"
               >
@@ -168,9 +178,10 @@ export default function Details() {
 
               {invoice.status === "pending" && (
                 <Button
-                  className="cursor-pointer hover:!bg-[#9277FF] h-12 rounded-2xl"
+                  className="cursor-pointer !bg-[#9277FF] h-12 rounded-2xl"
                   onClick={() => handleUpdate(invoice.id, { status: "paid" })}
                   disabled={updateLoading}
+                  style={{ color: "var(--home-text)" }}
                 >
                   {updateLoading ? "Loading..." : "Mark as Paid"}
                 </Button>
@@ -179,17 +190,29 @@ export default function Details() {
           </CardContent>
         </Card>
 
-        <Card className="p-12">
+        <Card className="p-12" style={{ backgroundColor: "var(--card-bgs)" }}>
           <div className="flex justify-between">
             <div>
               <h3 className="mb-2 font-semibold text-[16px] text-[#888EB0]">
-                #<span className="text-black">{invoice.id}</span>
+                #
+                <span
+                  className="text-black"
+                  style={{ color: "var(--home-text)" }}
+                >
+                  {invoice.id}
+                </span>
               </h3>
-              <h3 className="text-[#7E88C3] text-[12px]">
+              <h3
+                className=" text-[12px]"
+                style={{ color: "var(--home-text)" }}
+              >
                 {invoice.description}
               </h3>
             </div>
-            <div className="text-end text-[12px] text-[#7E88C3]">
+            <div
+              className="text-end text-[12px]"
+              style={{ color: "var(--home-text)" }}
+            >
               <p>{invoice.senderAddress?.street}</p>
               <p>{invoice.senderAddress?.city}</p>
               <p>{formatPostCode(invoice.senderAddress?.postCode)}</p>
@@ -197,18 +220,32 @@ export default function Details() {
             </div>
           </div>
 
-          <div className="mt-5 flex justify-between text-[12px] text-[#7E88C3]">
+          <div
+            className="mt-5 flex justify-between text-[12px]"
+            style={{ color: "var(--home-text)" }}
+          >
             <div>
               <p>Invoice Date</p>
-              <h3 className="text-[15px] text-black font-bold">
+              <h3
+                className="text-[15px] text-black font-bold"
+                style={{ color: "var(--home-text)" }}
+              >
                 {formatDate(invoice.createdAt)}
               </h3>
               <p className="mt-8">Payment Due</p>
-              <h3 className="text-[15px] text-black font-bold">20 Sep 2021</h3>
+              <h3
+                className="text-[15px] text-black font-bold"
+                style={{ color: "var(--home-text)" }}
+              >
+                20 Sep 2021
+              </h3>
             </div>
             <div>
               <p>Bill To</p>
-              <h3 className="mt-3 mb-2 text-[15px] text-black font-bold">
+              <h3
+                className="mt-3 mb-2 text-[15px] text-black font-bold"
+                style={{ color: "var(--home-text)" }}
+              >
                 {invoice.clientName}
               </h3>
               <p>{invoice.clientAddress?.street}</p>
@@ -218,15 +255,24 @@ export default function Details() {
             </div>
             <div>
               <p>Sent to</p>
-              <h3 className="mt-3 text-[15px] text-black font-bold">
+              <h3
+                className="mt-3 text-[15px] text-black font-bold"
+                style={{ color: "var(--home-text)" }}
+              >
                 {invoice.clientEmail}
               </h3>
             </div>
           </div>
 
           <div>
-            <div className="mt-10 p-8 bg-[#F9FAFE] rounded-t-2xl">
-              <div className="grid grid-cols-4 text-sm font-medium text-muted-foreground mb-6">
+            <div
+              className="mt-10 p-8 bg-[#F9FAFE] rounded-t-2xl"
+              style={{ backgroundColor: "var(--card-bg)" }}
+            >
+              <div
+                className="grid grid-cols-4 text-sm font-medium text-muted-foreground mb-6"
+                style={{ color: "var(--home-text)" }}
+              >
                 <span>Item Name</span>
                 <span className="text-center">QTY.</span>
                 <span className="text-center">Price</span>
@@ -235,20 +281,32 @@ export default function Details() {
               {invoice.items?.map((item, idx) => (
                 <div key={idx} className="grid grid-cols-4 text-sm py-2">
                   <span className="font-semibold">{item.name}</span>
-                  <span className="text-center text-muted-foreground">
+                  <span
+                    className="text-center text-muted-foreground"
+                    style={{ color: "var(--home-text)" }}
+                  >
                     {item.quantity}
                   </span>
-                  <span className="text-center text-muted-foreground">
+                  <span
+                    className="text-center text-muted-foreground"
+                    style={{ color: "var(--home-text)" }}
+                  >
                     £ {Number(item.price).toFixed(2)}
                   </span>
-                  <span className="text-end font-semibold">
+                  <span
+                    className="text-end font-semibold"
+                    style={{ color: "var(--home-text)" }}
+                  >
                     £ {Number(item.total).toFixed(2)}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="flex justify-between rounded-b-2xl p-7 bg-[#373B53] text-white">
+            <div
+              className="flex items-center justify-between rounded-b-2xl p-7 !bg-[#373B53] text-white"
+              style={{ backgroundColor: "var(--cards-bg)" }}
+            >
               <p className="font-normal text-[11px]">Amount Due</p>
               <h2 className="font-bold text-[24px]">
                 £ {Number(invoice.total).toFixed(2)}
