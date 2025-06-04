@@ -1,10 +1,12 @@
 const baseURL = import.meta.env.VITE_BASE_URL;
 
+console.log("BASE URL:", baseURL);
+
 export async function getInvoices(query = "") {
   const req = await fetch(baseURL + (query ? `?status=${query}` : ""));
   if (req.status === 200) {
     const result = await req.json();
-    return Array.isArray(result.data) ? result.data : []; 
+    return Array.isArray(result.data) ? result.data : [];
   } else {
     throw new Error("Something went wrong :(");
   }

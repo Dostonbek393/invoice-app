@@ -29,8 +29,6 @@ export default function Form({ info, setSheetOpen }) {
     paymentTerms,
     description,
     createdAt,
-    paymentDue,
-    items,
   } = info || {};
   const navigate = useNavigate();
   const [sending, setSending] = useState(null);
@@ -386,5 +384,3 @@ export default function Form({ info, setSheetOpen }) {
     </form>
   );
 }
-
-/*...*/
