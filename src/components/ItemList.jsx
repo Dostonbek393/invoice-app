@@ -7,44 +7,52 @@ import { useAppStore } from "../lib/zustand";
 
 export default function ItemList({ info }) {
   const { setItems } = useAppStore();
+
   const [localItems, setLocalItems] = useState(
-    info
-      ? info
+    info?.length
+      ? info.map((item) => ({
+          ...item,
+          total: +item.price * +item.quantity,
+        }))
       : [
           {
             id: crypto.randomUUID(),
             name: "",
             quantity: 1,
             price: 0,
-            get total() {
-              return +this.price * +this.quantity;
-            },
+            total: 0,
           },
         ]
   );
 
   useEffect(() => {
     setItems(localItems);
-  }, [JSON.stringify(localItems)]);
+  }, [localItems]);
 
   function handleChange(e, id) {
-    const changedItem = localItems.find((el) => {
-      return el.id === id;
-    });
-    changedItem[e.target.name] = e.target.value;
-    setLocalItems((prev) => {
-      const mapped = prev.map((el) => {
-        if (el.id === changedItem.id) {
-          return changedItem;
-        } else {
-          return el;
+    const { name, value } = e.target;
+
+    setLocalItems((prevItems) =>
+      prevItems.map((item) => {
+        if (item.id === id) {
+          const updatedItem = {
+            ...item,
+            [name]: value,
+          };
+
+          // Totalni faqat quantity yoki price o'zgarsa hisobla
+          if (name === "quantity" || name === "price") {
+            updatedItem.total = +updatedItem.price * +updatedItem.quantity;
+          }
+
+          return updatedItem;
         }
-      });
-      return mapped;
-    });
+        return item;
+      })
+    );
   }
 
-  const handleClick = (type, id) => {
+  function handleClick(type, id) {
     if (type === "add") {
       const lastItem = localItems.at(-1);
       if (!lastItem.name.trim()) {
@@ -60,44 +68,34 @@ export default function ItemList({ info }) {
       };
       setLocalItems((prev) => [...prev, newItem]);
     }
+
     if (type === "delete") {
       if (localItems.length === 1) {
         toast.warning("Kamida bitta item qolishi kerak!");
         return;
       }
-      const updated = localItems.filter((item) => item.id !== id);
-      setLocalItems(updated);
+      setLocalItems((prev) => prev.filter((item) => item.id !== id));
     }
-  };
-
-  useEffect(() => {
-    setItems(localItems);
-  }, [localItems]);
+  }
 
   return (
     <div className="mt-8">
       <h3 className="text-[#777F98] text-[18px] font-bold">Item List</h3>
+
       <div className="flex justify-between mt-4 text-[#7E88C3] font-normal text-[12px]">
-        <div className="flex flex-col w-[210px]">
-          <span>Item Name</span>
-        </div>
-        <div className="flex flex-col w-[100px]">
-          <span>Qty</span>
-        </div>
-        <div className="flex flex-col w-[100px]">
-          <span>Price</span>
-        </div>
-        <div className="flex flex-col w-[80px]">
-          <span>Total</span>
-        </div>
+        <div className="flex flex-col w-[210px]">Item Name</div>
+        <div className="flex flex-col w-[100px]">Qty</div>
+        <div className="flex flex-col w-[100px]">Price</div>
+        <div className="flex flex-col w-[80px]">Total</div>
         <div className="w-[40px]"></div>
       </div>
+
       <ul className="flex flex-col gap-4 mt-4">
-        {localItems.map(({ name, quantity, price, total, id }) => (
+        {localItems.map(({ id, name, quantity, price, total }) => (
           <li className="flex justify-between items-center" key={id}>
             <Input
               onChange={(e) => handleChange(e, id)}
-              defaultValue={name}
+              value={name}
               type="text"
               name="name"
               placeholder="Item Name"
@@ -105,21 +103,23 @@ export default function ItemList({ info }) {
             />
             <Input
               onChange={(e) => handleChange(e, id)}
-              defaultValue={quantity}
-              className="w-[100px] h-12"
+              value={quantity}
               type="number"
               name="quantity"
               placeholder="Qty"
+              className="w-[100px] h-12"
             />
             <Input
               onChange={(e) => handleChange(e, id)}
-              defaultValue={price}
-              className="w-[100px] h-12"
+              value={price}
               type="number"
               name="price"
               placeholder="Price"
+              className="w-[100px] h-12"
             />
-            <span className="w-[80px] text-[#888EB0]">{total.toFixed(2)}</span>
+            <span className="w-[80px] text-[#888EB0]">
+              {(+total).toFixed(2)}
+            </span>
             <Button
               type="button"
               onClick={() => handleClick("delete", id)}
@@ -132,9 +132,10 @@ export default function ItemList({ info }) {
           </li>
         ))}
       </ul>
+
       <Button
         type="button"
-        onClick={() => handleClick("add", crypto.randomUUID())}
+        onClick={() => handleClick("add")}
         className="w-full h-12 cursor-pointer hover:!bg-[#DFE3FA] mt-[18px]"
         variant="secondary"
       >
